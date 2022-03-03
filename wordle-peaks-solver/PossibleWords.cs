@@ -6,17 +6,17 @@ namespace wordle_peaks_solver
 {
     internal class PossibleWords
     {
-        private static HashSet<char> VALID_RESULT_CHARS = new HashSet<char> { 'G', 'B', 'O' };
+        private static readonly HashSet<char> VALID_RESULT_CHARS = new HashSet<char> { 'G', 'B', 'O' };
 
-        private char[] _low;
-        private char[] _high;
+        private readonly char[] _low;
+        private readonly char[] _high;
         private List<string> _options;
 
         public PossibleWords(IEnumerable<string> words)
         {
             _low = new char[5];
             _high = new char[5];
-            for (var x=0; x<5; x++)
+            for (var x = 0; x < 5; x++)
             {
                 _low[x] = 'a';
                 _high[x] = 'z';
