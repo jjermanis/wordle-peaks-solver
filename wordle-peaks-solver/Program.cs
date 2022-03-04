@@ -6,6 +6,7 @@ namespace wordle_peaks_solver
     {
         private const string INTERACTIVE_ARG = "-p";
         private const string TEST_ARG = "-t";
+        private const string ILLEGAL_CHECK_ARG = "-i";
 
         private const string FILE_PATH = @"..\..\..\words.txt";
 
@@ -19,6 +20,10 @@ namespace wordle_peaks_solver
             {
                 case TEST_ARG:
                     new TestGame(words).RunTest();
+                    break;
+
+                case ILLEGAL_CHECK_ARG:
+                    new DictionaryCheck(words).IllegalWordCheck();
                     break;
 
                 case INTERACTIVE_ARG:
