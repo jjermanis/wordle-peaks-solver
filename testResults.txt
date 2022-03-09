@@ -1,0 +1,42 @@
+3/4/22
+Running test: 2000 words
+1: 0
+2: 68
+3: 839
+4: 956
+5: 133
+6: 4
+Misses: 0
+Average: 3.583
+
+Running test: 4000 words
+1: 1
+2: 121
+3: 1688
+4: 1897
+5: 281
+6: 12
+Misses: 0
+Average: 3.593
+
+
+3/8
+Running test: 2000 words
+1: 0
+2: 68
+3: 838
+4: 959
+5: 131
+6: 4
+Misses: 0
+Average: 3.5825
+
+Running test: 4000 words
+1: 1
+2: 121
+3: 1705
+4: 1884
+5: 277
+6: 12
+Misses: 0
+Average: 3.58775
