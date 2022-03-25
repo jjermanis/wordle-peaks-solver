@@ -6,41 +6,11 @@ namespace wordle_peaks_solver
 {
     public class TestGame
     {
-        private const int TEST_SIZE = 2000;
+        private const int GUESS_COUNT = 6;
+        private const int TEST_SIZE = 4000;
+        private readonly bool SHOW_WORD_DETAILS = false;
+
         private readonly IList<string> _words;
-
-        private class ResultDist
-        {
-            public ResultDist()
-            {
-                ScoreCount = new int[7];
-            }
-
-            public int[] ScoreCount { get; set; }
-            public int Misses { get; set; }
-
-            private decimal Average()
-            {
-                decimal total = 0;
-                decimal cases = 0;
-                for (int i = 1; i <= 6; i++)
-                {
-                    total += i * ScoreCount[i];
-                    cases += ScoreCount[i];
-                }
-                return total / cases;
-            }
-
-            public override string ToString()
-            {
-                string result = "";
-                for (int i = 1; i <= 6; i++)
-                    result += $"{i}: {ScoreCount[i]}\r\n";
-                result += $"Misses: {Misses}\r\n";
-                result += $"Average: {Average()}\r\n";
-                return result;
-            }
-        }
 
         public TestGame(IEnumerable<string> words)
         {
@@ -49,18 +19,24 @@ namespace wordle_peaks_solver
 
         public void RunTest()
         {
+            int start = Environment.TickCount;
             Console.WriteLine($"Running test: {TEST_SIZE} words");
             var testWords = _words.Take(TEST_SIZE);
-            var results = new ResultDist();
+            var results = new ResultDistribution(GUESS_COUNT);
             foreach (var word in testWords)
             {
                 var score = PlayGame(word);
                 if (score.HasValue)
                     results.ScoreCount[score.Value]++;
                 else
+                {
                     results.Misses++;
+                    if (SHOW_WORD_DETAILS)
+                        Console.WriteLine($"Missed: {word}");
+                }
             }
             Console.Write(results);
+            Console.WriteLine($"Time: {Environment.TickCount - start} ms");
         }
 
         public int? PlayGame(string target)
