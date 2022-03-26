@@ -11,6 +11,7 @@ namespace wordle_peaks_solver
         private readonly char[] _low;
         private readonly char[] _high;
         private List<string> _options;
+        private OptimalGuess _optimalGuess;
 
         public PossibleWords(IEnumerable<string> words)
         {
@@ -23,22 +24,20 @@ namespace wordle_peaks_solver
             }
 
             _options = words.ToList();
+            UpdateOptions();
         }
 
         public string BestGuess()
-        {
-            _options = _options.OrderByDescending(w => Score(w)).ToList();
-            return _options.FirstOrDefault();
-        }
+            => _options.FirstOrDefault();
 
         public int Score(string word)
         {
             var result = 1;
+            var opt = _optimalGuess.Word;
 
             for (var i = 0; i < 5; i++)
             {
-                var curr = word[i];
-                var score = Math.Min(curr - _low[i] + 1, _high[i] - curr + 1);
+                var score = 26 - (Math.Abs(word[i] - opt[i]));
                 result *= score;
             }
 
@@ -79,6 +78,7 @@ namespace wordle_peaks_solver
                     newList.Add(word);
             }
             _options = newList;
+            UpdateOptions();
         }
 
         public static bool IsValidResult(string result)
@@ -89,6 +89,12 @@ namespace wordle_peaks_solver
                 if (!VALID_RESULT_CHARS.Contains(c))
                     return false;
             return true;
+        }
+
+        private void UpdateOptions()
+        {
+            _optimalGuess = new OptimalGuess(_options);
+            _options = _options.OrderByDescending(w => Score(w)).ToList();
         }
     }
 }

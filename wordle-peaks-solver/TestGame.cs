@@ -7,7 +7,7 @@ namespace wordle_peaks_solver
     public class TestGame
     {
         private const int GUESS_COUNT = 6;
-        private const int TEST_SIZE = 4000;
+        private const int TEST_SIZE = 2000;
         private readonly bool SHOW_WORD_DETAILS = false;
 
         private readonly IList<string> _words;
