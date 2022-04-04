@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace wordle_peaks_solver
 {
@@ -23,7 +24,7 @@ namespace wordle_peaks_solver
             Console.WriteLine($"Running test: {TEST_SIZE} words");
             var testWords = _words.Take(TEST_SIZE);
             var results = new ResultDistribution(GUESS_COUNT);
-            foreach (var word in testWords)
+            Parallel.ForEach(testWords, word =>
             {
                 var score = PlayGame(word);
                 if (score.HasValue)
@@ -34,7 +35,7 @@ namespace wordle_peaks_solver
                     if (SHOW_WORD_DETAILS)
                         Console.WriteLine($"Missed: {word}");
                 }
-            }
+            });
             Console.Write(results);
             Console.WriteLine($"Time: {Environment.TickCount - start} ms");
         }
